@@ -1,3 +1,5 @@
+var allVotes = 0;
+
 var imageTracker = function (name, source) {
 	this.imageSource = source;
 	this.upVotes = 0;
@@ -46,8 +48,27 @@ function recordClick(event){
 		if (clickedImageSource.indexOf(imageOptions[index].imageSource) >= 0) {
 			imageOptions[index].upVotes++;
 			console.log(" Clicked Item: " +imageOptions[index].name);
+			allVotes++;
+			console.log(allVotes);
 			document.getElementById('votes').innerHTML = imageOptions[index].upVotes + " of 15 votes";
-			//console.log(imageOptions[index].name);
+		}
+		if(allVotes == 15) {
+			userResults();
+		} else {
+			getThreeImages();
+		}
 		}// if (clickedimageSource.indexOf(imageOptions[index].imageSource) >=0)
 	}// for(var index = 0; index < imageOptions.length; index++)
+
+
+function userResults () {
+	var voteResults = document.createElement('ul');
+	var voteResultsPosition = document.getElementById('voteResults');
+	document.getElementById('voteResults').innerHTML = voteResults;
+	for (var i = 0; i < imageOptions.length; i++) {
+		var voteResultsLi = document.createElement('li');
+		var voteResultsText = document.createTextNode(imageOptions[i].name + ": " + imageOptions[i].upVotes);
+		voteResultsLi.appendChild(voteResultsText);
+		voteResults.appendChild(voteResultsLi);
+	}
 }
